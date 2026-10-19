@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostCard from '../components/PostCard.astro';
+import { SITE_TITLE, SECTIONS, SECTION_KEYS } from '../consts';
+import { getAllPosts } from '../lib/posts';
+
+const recent = (await getAllPosts()).slice(0, 8);
+---
+
+<BaseLayout>
+	<h1>{SITE_TITLE}</h1>
+	<p class="intro">
+		Hi, I'm a software engineer, and I like to write. This is where I keep my interview
+		experiences, the sports I follow, the places I travel to, and whatever I'm learning
+		along the way. <a href="/about/">More about me</a>.
+	</p>
+
+	<ul class="sections">
+		{SECTION_KEYS.map((key) => (
+			<li>
+				<a href={`/${key}/`}>{SECTIONS[key].label}</a>
+				<span>{SECTIONS[key].blurb}</span>
+			</li>
+		))}
+	</ul>
+
+	<h2>Recent</h2>
+	{recent.length === 0 ? <p>Nothing here yet.</p> : recent.map((post) => <PostCard post={post} showSection />)}
+</BaseLayout>
+
+<style>
+	.intro { font-size: 1.15rem; }
+	.sections { list-style: none; padding: 0; margin: 2rem 0; display: grid; gap: 0.75rem; }
+	.sections li { display: grid; gap: 0.1rem; }
+	.sections a { font-weight: 700; font-size: 1.1rem; }
+	.sections span { color: var(--muted); }
+</style>

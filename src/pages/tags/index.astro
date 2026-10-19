@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getAllPosts } from '../../lib/posts';
+
+const counts = new Map<string, number>();
+for (const post of await getAllPosts()) {
+	for (const tag of post.data.tags) counts.set(tag, (counts.get(tag) ?? 0) + 1);
+}
+const tags = [...counts].sort(([a], [b]) => a.localeCompare(b));
+---
+
+<BaseLayout title="Tags">
+	<h1>Tags</h1>
+	{tags.length === 0 ? <p>No tags yet.</p> : (
+		<ul class="tags">
+			{tags.map(([tag, n]) => <li><a class="tag" href={`/tags/${tag}/`}>#{tag} ({n})</a></li>)}
+		</ul>
+	)}
+</BaseLayout>

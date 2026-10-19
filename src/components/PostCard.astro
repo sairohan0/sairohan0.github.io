@@ -1,0 +1,28 @@
+---
+import { SECTIONS } from '../consts';
+import { postUrl, type Post } from '../lib/posts';
+
+interface Props {
+	post: Post;
+	showSection?: boolean;
+}
+const { post, showSection = false } = Astro.props;
+const date = post.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+---
+
+<article>
+	<p class="meta">
+		{date}{showSection && <> · {SECTIONS[post.section].label}</>}{post.data.draft && ' · DRAFT'}
+	</p>
+	<h3><a href={postUrl(post)}>{post.data.title}</a></h3>
+	<p>{post.data.description}</p>
+</article>
+
+<style>
+	article { padding: 1.25rem 0; border-bottom: 1px solid var(--border); }
+	h3 { margin: 0.1rem 0 0.3rem; font-size: 1.25rem; }
+	h3 a { color: var(--fg); text-decoration: none; }
+	h3 a:hover { color: var(--accent); }
+	p { margin: 0; }
+	.meta { margin-bottom: 0.1rem; }
+</style>

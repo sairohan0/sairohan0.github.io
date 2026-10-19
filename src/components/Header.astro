@@ -1,0 +1,29 @@
+---
+import { SITE_TITLE, SECTIONS, SECTION_KEYS } from '../consts';
+const path = Astro.url.pathname;
+---
+
+<header class="wrap">
+	<nav>
+		<a class="brand" href="/">{SITE_TITLE}</a>
+		<ul>
+			{SECTION_KEYS.map((key) => (
+				<li>
+					<a href={`/${key}/`} aria-current={path.startsWith(`/${key}/`) ? 'page' : undefined}>
+						{SECTIONS[key].label}
+					</a>
+				</li>
+			))}
+			<li><a href="/about/" aria-current={path.startsWith('/about') ? 'page' : undefined}>About</a></li>
+		</ul>
+	</nav>
+</header>
+
+<style>
+	header { padding-top: 1.25rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
+	nav { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.5rem 1.5rem; }
+	.brand { font-weight: 700; font-size: 1.05rem; color: var(--fg); text-decoration: none; }
+	ul { display: flex; flex-wrap: wrap; gap: 1rem; list-style: none; margin: 0; padding: 0; }
+	ul a { color: var(--muted); text-decoration: none; }
+	ul a:hover, ul a[aria-current='page'] { color: var(--accent); }
+</style>

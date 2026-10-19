@@ -1,0 +1,23 @@
+---
+import { render } from 'astro:content';
+import PostLayout from '../../layouts/PostLayout.astro';
+import { SECTION_KEYS } from '../../consts';
+import { getSectionPosts } from '../../lib/posts';
+
+export async function getStaticPaths() {
+	const perSection = await Promise.all(
+		SECTION_KEYS.map(async (section) => {
+			const posts = await getSectionPosts(section);
+			return posts.map((post) => ({ params: { section, slug: post.id }, props: { post } }));
+		}),
+	);
+	return perSection.flat();
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<PostLayout post={post}>
+	<Content />
+</PostLayout>
