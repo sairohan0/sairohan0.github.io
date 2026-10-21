@@ -6,7 +6,7 @@ tags: [interviews, dsa]
 company: Google
 role: Software Engineer L3
 outcome: rejected
-draft: true
+draft: false
 ---
 
 ## The process
