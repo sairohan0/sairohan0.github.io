@@ -5,7 +5,8 @@ date: 2025-04-01
 tags: [interviews, dsa]
 company: Amazon
 role: Software Development Engineer
-draft: true
+outcome: rejected
+draft: false
 ---
 
 ## The process
